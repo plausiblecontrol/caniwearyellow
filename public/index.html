@@ -4,60 +4,72 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Can you wear yellow? 🤔</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
   body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
     background-color: #FFF8DC;
   }
 
   #question-container {
-    text-align: center;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin-top: 100px;
+    max-width: 400px; /* Set maximum width */
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
   }
 
-  #question-container label,
-  #question-container input,
-  #question-container button {
-    margin: 10px 0;
+  #submit-btn,#retry-btn {
+    background-color: #FFCC00;
+    border-color: #FFCC00;
+    color: #000000;
   }
+
+ #response-no-container,#response-yes-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+
 </style>
 </head>
 <body>
 
-<div id="question-container">
-  <label for="question">What is your name?</label>
-  <input type="text" id="question" name="question">
-  <br>
-  <button onclick="submitQuestion()">Submit</button>
-</div>
+<div class="container">
+  <div id="question-container" class="card">
+    <div class="card-body">
+      <h5 class="card-title">What is your name?</h5>
+      <input type="text" id="question" name="question" class="form-control mb-2" onkeyup="checkEnter(event)">
+      <button onclick="submitQuestion()" id="submit-btn" class="btn btn-primary">Can I wear yellow?</button>
+    </div>
+  </div>
 
-<div id="response-no-container" style="display: none;">
-  <p>No, sorry, you really can't.</p>
-  <br>
-  <button onclick="retry()">Someone Else?</button>
-</div>
+  <div id="response-no-container" class="card" style="display: none;">
+    <div class="card-body">
+      <h5>No, sorry, you really can't.</h5><br><p>That's too bad too, such a good color!</p><br>
+      <button onclick="retry()" id="retry-btn" class="btn btn-primary">Sorry I meant someone else..</button>
+    </div>
+  </div>
 
-<div id="response-yes-container" style="display: none;">
-  <p>Yes, you can!</p>
-  <br>
-  <button onclick="retry()">Someone Else?</button>
+  <div id="response-yes-container" class="card" style="display: none;">
+    <div class="card-body">
+      <h5>Oh for sure you can!</h5><br><p>Wear yellow to your heart's content.</p><br>
+      <button onclick="retry()" id="retry-btn" class="btn btn-primary">Sorry I meant someone else..</button>
+    </div>
+  </div>
 </div>
-
 
 <script>
 function submitQuestion() {
-  var question = document.getElementById("question").value;
-  document.getElementById("question-container").style.display = "none";
-  if (question.toLowerCase().includes("andrew")) {
-    document.getElementById("response-no-container").style.display = "block";
-  } else {
-    document.getElementById("response-yes-container").style.display = "block";
+  var question = document.getElementById("question").value.trim();
+  if (question.length > 0) {
+    document.getElementById("question-container").style.display = "none";
+    if (question.toLowerCase().includes("andrew")) {
+      document.getElementById("response-no-container").style.display = "block";
+    } else {
+      document.getElementById("response-yes-container").style.display = "block";
+    }
   }
 }
 
@@ -67,7 +79,14 @@ function retry() {
   document.getElementById("response-no-container").style.display = "none";
   document.getElementById("question").value = "";
 }
+
+function checkEnter(event) {
+  if (event.keyCode === 13) {
+    submitQuestion();
+  }
+}
 </script>
 
 </body>
 </html>
+
