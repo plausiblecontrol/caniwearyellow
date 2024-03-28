@@ -1,1 +1,73 @@
-Hrm.. depends!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Can you wear yellow? 🤔</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #FFF8DC;
+  }
+
+  #question-container {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  #question-container label,
+  #question-container input,
+  #question-container button {
+    margin: 10px 0;
+  }
+</style>
+</head>
+<body>
+
+<div id="question-container">
+  <label for="question">What is your name?</label>
+  <input type="text" id="question" name="question">
+  <br>
+  <button onclick="submitQuestion()">Submit</button>
+</div>
+
+<div id="response-no-container" style="display: none;">
+  <p>No, sorry, you really can't.</p>
+  <br>
+  <button onclick="retry()">Someone Else?</button>
+</div>
+
+<div id="response-yes-container" style="display: none;">
+  <p>Yes, you can!</p>
+  <br>
+  <button onclick="retry()">Someone Else?</button>
+</div>
+
+
+<script>
+function submitQuestion() {
+  var question = document.getElementById("question").value;
+  document.getElementById("question-container").style.display = "none";
+  if (question.toLowerCase().includes("andrew")) {
+    document.getElementById("response-no-container").style.display = "block";
+  } else {
+    document.getElementById("response-yes-container").style.display = "block";
+  }
+}
+
+function retry() {
+  document.getElementById("question-container").style.display = "block";
+  document.getElementById("response-yes-container").style.display = "none";
+  document.getElementById("response-no-container").style.display = "none";
+  document.getElementById("question").value = "";
+}
+</script>
+
+</body>
+</html>
